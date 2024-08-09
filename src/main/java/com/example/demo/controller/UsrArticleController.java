@@ -52,6 +52,35 @@ public class UsrArticleController {
 
 	// 액션 메서드
 
+	@RequestMapping("/usr/article/getArticle")
+	@ResponseBody
+	public Object getArticle(int id) {
+
+		Article article = getArticleById(id);
+
+		if (article == null) {
+			return id + "번 글은 없음";
+		}
+
+		return article;
+	}
+
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public Object doModify(int id, String title, String body) {
+
+		Article article = getArticleById(id);
+
+		if (article == null) {
+			return id + "번 글은 없음";
+		}
+
+		article.setTitle(title);
+		article.setBody(body);
+
+		return article;
+	}
+
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
