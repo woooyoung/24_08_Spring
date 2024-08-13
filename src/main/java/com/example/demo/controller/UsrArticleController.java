@@ -31,7 +31,7 @@ public class UsrArticleController {
 
 		}
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글 입니다", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시글 입니다", id), "게시글 1개", article);
 	}
 
 	// 로그인 체크 -> 유무 체크 -> 권한 체크 -> 수정
@@ -67,7 +67,8 @@ public class UsrArticleController {
 
 		article = articleService.getArticleById(id);
 
-		return ResultData.from(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(), article);
+		return ResultData.from(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(), "수정 된 게시글",
+				article);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
@@ -89,7 +90,7 @@ public class UsrArticleController {
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id), id);
+			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id), "입력한 id", id);
 		}
 
 		if (article.getMemberId() != loginedMemberId) {
@@ -98,7 +99,7 @@ public class UsrArticleController {
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다", id), "입력한 id", id);
 	}
 
 	@RequestMapping("/usr/article/doWrite")
@@ -130,14 +131,14 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticleById(id);
 
-		return ResultData.newData(writeArticleRd, article);
+		return ResultData.newData(writeArticleRd, "생성된 게시글", article);
 	}
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
 	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
-		return ResultData.from("S-1", "Article List", articles);
+		return ResultData.from("S-1", "Article List", "게시글 목록", articles);
 	}
 
 }
