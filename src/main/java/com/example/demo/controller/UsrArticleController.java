@@ -22,14 +22,17 @@ public class UsrArticleController {
 	private ArticleService articleService;
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(HttpSession httpSession, Model model, int id) {
 
-		Article article = articleService.getArticleById(id);
+		boolean isLogined = false;
+		int loginedMemberId = 0;
 
-//		if (article == null) {
-//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
-//
-//		}
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		model.addAttribute("article", article);
 
@@ -59,18 +62,17 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
-		ResultData loginedMemberCanModifyRd = articleService.loginedMemberCanModify(loginedMemberId, article);
+		ResultData userCanModify = articleService.userCanModify(loginedMemberId, article);
 
-		if (loginedMemberCanModifyRd.isFail()) {
-			return loginedMemberCanModifyRd;
+		if (userCanModify.isFail()) {
+			return userCanModify;
 		}
 
 		articleService.modifyArticle(id, title, body);
 
 		article = articleService.getArticleById(id);
 
-		return ResultData.from(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(), "수정 된 게시글",
-				article);
+		return ResultData.from(userCanModify.getResultCode(), userCanModify.getMsg(), "수정 된 게시글", article);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
