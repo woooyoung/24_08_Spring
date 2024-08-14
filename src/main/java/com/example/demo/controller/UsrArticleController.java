@@ -21,18 +21,19 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/article/getArticle")
-	@ResponseBody
-	public ResultData<Article> getArticle(int id) {
+	@RequestMapping("/usr/article/detail")
+	public String showDetail(Model model, int id) {
 
 		Article article = articleService.getArticleById(id);
 
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
+//		if (article == null) {
+//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
+//
+//		}
 
-		}
+		model.addAttribute("article", article);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글 입니다", id), "게시글 1개", article);
+		return "usr/article/detail";
 	}
 
 	// 로그인 체크 -> 유무 체크 -> 권한 체크 -> 수정
