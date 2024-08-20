@@ -20,9 +20,10 @@
 						<option value="title">title</option>
 						<option value="body">body</option>
 						<option value="title,body">title+body</option>
-						<option value="nickname">nicnkname</option>
-					</select> <label class="ml-3 input input-bordered input-sm flex items-center gap-2"> <input type="text"
-						placeholder="Search" name="searchKeyword" value="${param.searchKeyword }" />
+						<option value="writer">writer</option>
+					</select>
+					<label class="ml-3 input input-bordered input-sm flex items-center gap-2">
+						<input type="text" placeholder="Search" name="searchKeyword" value="${param.searchKeyword }" />
 						<button type="submit">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
     <path fill-rule="evenodd"

@@ -147,6 +147,8 @@ UPDATE article
 SET boardId = 3
 WHERE id = 4;
 
+alter table article add column hitCount int(10) unsigned not null default 0 after `body`;
+
 ###(INIT 끝)
 ##########################################
 SELECT *
@@ -187,3 +189,52 @@ title = CONCAT('제목__', RAND()),
 
 show full columns from `member`;
 desc `member`;
+
+SELECT *
+FROM article
+where boardId = 1
+ORDER BY id DESC;
+
+SELECT *
+FROM article
+WHERE boardId = 2
+ORDER BY id DESC;
+
+SELECT *
+FROM article
+WHERE boardId = 3
+ORDER BY id DESC;
+
+'111'
+
+SELECT COUNT(*) AS cnt
+FROM article
+WHERE boardId = 1
+ORDER BY id DESC;
+
+SELECT *
+FROM article
+WHERE boardId = 1 and title like '%123%'
+ORDER BY id DESC;
+
+SELECT *
+FROM article
+WHERE boardId = 1 and `body` like '%123%'
+ORDER BY id DESC;
+
+SELECT *
+FROM article
+WHERE boardId = 1 and title like '%123%' or `body` like '%123%'
+ORDER BY id DESC;
+
+SELECT count(*)
+FROM article AS A
+WHERE A.boardId = 1 
+ORDER BY A.id DESC;
+
+boardId=1&searchKeywordTypeCode=nickname&searchKeyword=1
+
+SELECT COUNT(*)
+FROM article AS A
+WHERE A.boardId = 1 and A.memberId = 3
+ORDER BY A.id DESC;
