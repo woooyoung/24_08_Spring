@@ -88,7 +88,8 @@ public interface ArticleRepository {
 				</if>
 				</script>
 			""")
-	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode, String searchKeyword);
+	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode,
+			String searchKeyword);
 
 	@Select("""
 			SELECT A.* , M.nickname AS extra__writer
@@ -139,6 +140,6 @@ public interface ArticleRepository {
 			SET hitCount = hitCount + 1
 			WHERE id = #{id}
 			""")
-	public void increaseHitCount(int id);
+	public int increaseHitCount(int id);
 
 }
