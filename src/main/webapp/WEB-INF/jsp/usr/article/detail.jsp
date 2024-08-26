@@ -54,103 +54,92 @@
 		}
 	}
 
-	function doGoodReaction(articleId) {
+function doGoodReaction(articleId) {
+		
 		$.ajax({
-			url : '/usr/reactionPoint/doGoodReaction',
-			type : 'POST',
-			data : {
-				relTypeCode : 'article',
-				relId : articleId
-			},
-			dataType : 'json',
-			success : function(data) {
-				if (data.resultCode.startsWith('S-')) {
+			url: '/usr/reactionPoint/doGoodReaction',
+			type: 'POST',
+			data: {relTypeCode: 'article', relId: articleId},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				console.log('data.data1Name : ' + data.data1Name);
+				console.log('data.data1 : ' + data.data1);
+				console.log('data.data2Name : ' + data.data2Name);
+				console.log('data.data2 : ' + data.data2);
+				if(data.resultCode.startsWith('S-')){
 					var likeButton = $('#likeButton');
 					var likeCount = $('#likeCount');
 					var DislikeButton = $('#DislikeButton');
 					var DislikeCount = $('#DislikeCount');
-
-					if (data.resultCode == 'S-1') {
+					
+					if(data.resultCode == 'S-1'){
 						likeButton.toggleClass('btn-outline');
-						likeCount.text(parseInt(likeCount.text()) + 1);
-						console.log(1);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
-					} else if (data.resultCode == 'S-2') {
+						likeCount.text(data.data1);
+					}else if(data.resultCode == 'S-2'){
 						DislikeButton.toggleClass('btn-outline');
-						DislikeCount.text(parseInt(DislikeCount.text()) - 1);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
+						DislikeCount.text(data.data2);
 						likeButton.toggleClass('btn-outline');
-						likeCount.text(parseInt(likeCount.text()) + 1);
-						console.log(2);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
-					} else {
+						likeCount.text(data.data1);
+					}else {
 						likeButton.toggleClass('btn-outline');
-						likeCount.text(parseInt(likeCount.text()) + 1);
-						console.log(3);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
+						likeCount.text(data.data1);
 					}
-				} else {
+					
+				}else {
 					alert(data.msg);
 				}
+		
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
+			error: function(jqXHR,textStatus,errorThrown) {
 				alert('좋아요 오류 발생 : ' + textStatus);
-			}
 
+			}
+			
 		});
 	}
 
-	function doBadReaction(articleId) {
-		$.ajax({
-			url : '/usr/reactionPoint/doBadReaction',
-			type : 'POST',
-			data : {
-				relTypeCode : 'article',
-				relId : articleId
-			},
-			dataType : 'json',
-			success : function(data) {
-				if (data.resultCode.startsWith('S-')) {
+function doBadReaction(articleId) {
+	
+	 $.ajax({
+			url: '/usr/reactionPoint/doBadReaction',
+			type: 'POST',
+			data: {relTypeCode: 'article', relId: articleId},
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+				console.log('data.data1Name : ' + data.data1Name);
+				console.log('data.data1 : ' + data.data1);
+				console.log('data.data2Name : ' + data.data2Name);
+				console.log('data.data2 : ' + data.data2);
+				if(data.resultCode.startsWith('S-')){
 					var likeButton = $('#likeButton');
 					var likeCount = $('#likeCount');
 					var DislikeButton = $('#DislikeButton');
 					var DislikeCount = $('#DislikeCount');
-
-					if (data.resultCode == 'S-1') {
+					
+					if(data.resultCode == 'S-1'){
 						DislikeButton.toggleClass('btn-outline');
-						DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-						console.log(4);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
-					} else if (data.resultCode == 'S-2') {
+						DislikeCount.text(data.data2);
+					}else if(data.resultCode == 'S-2'){
 						likeButton.toggleClass('btn-outline');
-						likeCount.text(parseInt(likeCount.text()) - 1);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
+						likeCount.text(data.data1);
 						DislikeButton.toggleClass('btn-outline');
-						DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-						console.log(5);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
-					} else {
+						DislikeCount.text(data.data2);
+		
+					}else {
 						DislikeButton.toggleClass('btn-outline');
-						DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-						console.log(6);
-						console.log('likeCount.text() : ' + likeCount.text());
-						console.log('DislikeCount.text() : ' + DislikeCount.text());
+						DislikeCount.text(data.data2);
 					}
-				} else {
+			
+				}else {
 					alert(data.msg);
 				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
+			error: function(jqXHR,textStatus,errorThrown) {
 				alert('싫어요 오류 발생 : ' + textStatus);
 			}
-
+			
 		});
 	}
 
@@ -196,10 +185,14 @@
 					<th style="text-align: center;">LIKE / Dislike / ${usersReaction }</th>
 					<td style="text-align: center;">
 
-						<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(${param.id})">👍 LIKE
-							${article.goodReactionPoint}</button>
-						<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doGoodReaction(${param.id})">👎
-							DISLIKE ${article.badReactionPoint}</button>
+						<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(${param.id})">
+							👍 LIKE
+							<span id="likeCount">${article.goodReactionPoint}</span>
+						</button>
+						<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doBadReaction(${param.id})">
+							👎 DISLIKE
+							<span id="DislikeCount">${article.badReactionPoint}</span>
+						</button>
 						<%-- 						<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
 						<%-- 							class="btn btn-outline btn-success">👍 LIKE ${article.goodReactionPoint}</a> --%>
 						<%-- 						<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
