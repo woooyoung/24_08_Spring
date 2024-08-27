@@ -272,6 +272,68 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '댓글 4';
 
+# reply 테이블에 좋아요 관련 컬럼 추가
+ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# reactionPoint 테스트 데이터 생성
+# 1번 회원이 1번 댓글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'reply',
+relId = 1,
+`point` = -1;
+
+# 1번 회원이 2번 댓글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'reply',
+relId = 2,
+`point` = 1;
+
+# 2번 회원이 1번 댓글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 1,
+`point` = -1;
+
+# 2번 회원이 2번 댓글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 2,
+`point` = -1;
+
+# 3번 회원이 1번 댓글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'reply',
+relId = 1,
+`point` = 1;
+
+# update join -> 기존 게시물의 good,bad RP 값을 RP 테이블에서 가져온 데이터로 채운다
+UPDATE reply AS R
+INNER JOIN (
+    SELECT RP.relTypeCode,RP.relId,
+    SUM(IF(RP.point > 0, RP.point, 0)) AS goodReactionPoint,
+    SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId
+) AS RP_SUM
+ON R.id = RP_SUM.relId
+SET R.goodReactionPoint = RP_SUM.goodReactionPoint,
+R.badReactionPoint = RP_SUM.badReactionPoint;
 
 ###(INIT 끝)
 ##########################################
@@ -343,20 +405,20 @@ ORDER BY id DESC;
 
 SELECT *
 FROM article
-WHERE boardId = 1 and title like '%123%'
+WHERE boardId = 1 AND title LIKE '%123%'
 ORDER BY id DESC;
 
 SELECT *
 FROM article
-WHERE boardId = 1 and `body` like '%123%'
+WHERE boardId = 1 AND `body` LIKE '%123%'
 ORDER BY id DESC;
 
 SELECT *
 FROM article
-WHERE boardId = 1 and title like '%123%' or `body` like '%123%'
+WHERE boardId = 1 AND title LIKE '%123%' OR `body` LIKE '%123%'
 ORDER BY id DESC;
 
-SELECT count(*)
+SELECT COUNT(*)
 FROM article AS A
 WHERE A.boardId = 1 
 ORDER BY A.id DESC;
@@ -365,7 +427,7 @@ boardId=1&searchKeywordTypeCode=nickname&searchKeyword=1
 
 SELECT COUNT(*)
 FROM article AS A
-WHERE A.boardId = 1 and A.memberId = 3
+WHERE A.boardId = 1 AND A.memberId = 3
 ORDER BY A.id DESC;
 
 select hitCount
