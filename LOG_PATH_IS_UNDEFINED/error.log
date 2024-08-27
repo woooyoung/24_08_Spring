@@ -64,3 +64,17 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
 	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:195)
 	... 22 common frames omitted
+2024-08-27 10:15:45 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
