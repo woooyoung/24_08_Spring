@@ -124,6 +124,8 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doCheckPw")
 	@ResponseBody
 	public String doCheckPw(String loginPw) {
+		
+		
 		if (Ut.isEmptyOrNull(loginPw)) {
 			return Ut.jsHistoryBack("F-1", "비번 써");
 		}
