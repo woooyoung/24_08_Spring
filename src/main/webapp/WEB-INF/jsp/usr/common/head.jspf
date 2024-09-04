@@ -23,9 +23,7 @@
 <!-- daisyUI -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.12.10/full.css" />
 
-<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-<!-- // Add the new slick-theme.css if you want the default styling -->
-<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+
 
 <script>
   // 테마를 전환하는 함수
@@ -66,8 +64,9 @@
 			<div class="flex-grow"></div>
 			<ul class="flex">
 				<li class=""><a class="h-full px-3 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
-						<span>🌞</span> <span>🌚</span>
-				</a></li>
+						<span>🌞</span>
+						<span>🌚</span>
+					</a></li>
 				<li><a class="hover:underline" href="/">HOME</a></li>
 				<li>
 					<div class="dropdown dropdown-hover">
@@ -89,7 +88,7 @@
 					<li><a class="hover:underline" href="../article/write">WRITE</a></li>
 					<li><a class="hover:underline" href="../member/myPage">MYPAGE</a></li>
 					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
-						href="../member/doLogout">LOGOUT</a></li>
+							href="../member/doLogout">LOGOUT</a></li>
 				</c:if>
 			</ul>
 		</div>
